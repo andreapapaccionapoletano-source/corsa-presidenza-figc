@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FIGC 2026 — La corsa alla presidenza</title>
+  <meta name="description" content="Mappa interattiva della corsa alla presidenza FIGC tra Adriano Galliani e Giovanni Malagò: club, componenti, voti ponderati e regolamento.">
+  <meta name="theme-color" content="#0066cc">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="tricolore" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="hero-band">
+  <header class="hero wrap">
+    <div class="eyebrow">Assemblea federale elettiva · 14 dicembre 2026</div>
+    <h1>FIGC 2026 <span class="gold">—</span> La corsa alla presidenza</h1>
+    <p class="headline" id="headline"></p>
+    <div class="countdowns">
+      <div class="cd"><b id="cd-deadline">–</b><span>giorni al deposito delle candidature<br><small>4 novembre, ore 23:59</small></span></div>
+      <div class="cd"><b id="cd-assembly">–</b><span>giorni all'Assemblea<br><small>14 dicembre</small></span></div>
+      <div class="cd"><b>516</b><span>voti ponderati in palio<br><small>serve la maggioranza assoluta</small></span></div>
+    </div>
+  </header>
+  </div>
+
+  <section class="wrap faceoff" aria-label="I due candidati">
+    <article class="cand galliani" id="cand-galliani"></article>
+    <div class="score" id="score">
+      <div class="score-cap" id="score-cap"></div>
+      <div class="score-nums">
+        <span class="sg" id="score-g">0</span>
+        <span class="vs">%</span>
+        <span class="sm" id="score-m">0</span>
+      </div>
+      <div class="bar" id="topbar"><div class="bar-g"></div><div class="bar-u"></div><div class="bar-m"></div><i class="bar-50"></i></div>
+      <div class="score-legend"><span>Galliani</span><span id="score-u">bianche</span><span>Malagò</span></div>
+      <p class="score-note" id="score-note"></p>
+    </div>
+    <article class="cand malago" id="cand-malago"></article>
+  </section>
+
+  <main class="wrap">
+    <section class="block" id="mappa">
+      <div class="block-head">
+        <h2>La mappa della Serie A</h2>
+        <p>Un club, un delegato, 0,9% dei voti. Le posizioni dei club sono presunte: le riportano le testate, ma nessuna firma è ancora depositata. Tocca uno stemma per la fonte o per spostarlo nel simulatore.</p>
+      </div>
+      <div class="map-grid">
+        <div class="map-card">
+          <div class="chips" role="group" aria-label="Filtra i club">
+            <button class="chip on" data-filter="all">Tutti <b id="n-all">20</b></button>
+            <button class="chip g" data-filter="galliani">Galliani <b id="n-g">0</b></button>
+            <button class="chip m" data-filter="malago">Malagò <b id="n-m">0</b></button>
+            <button class="chip u" data-filter="undecided">Incerti <b id="n-u">0</b></button>
+          </div>
+          <svg id="map" viewBox="0 0 560 640" role="img" aria-label="Mappa d'Italia con i 20 club di Serie A colorati per schieramento"></svg>
+          <div class="quorum" id="quorum"></div>
+        </div>
+        <aside class="detail" id="detail" aria-live="polite"></aside>
+      </div>
+    </section>
+
+    <section class="block" id="assemblea">
+      <div class="block-head">
+        <h2>Il simulatore dell'Assemblea</h2>
+        <p>Si parte dalle posizioni note al 29 ottobre 2026, ufficiali o presunte. Poi tocca a te: sposta club e delegati, prova i franchi tiratori e guarda chi viene eletto e a quale scrutinio.</p>
+      </div>
+
+      <div class="sim-top">
+        <div class="presets" role="group" aria-label="Scenari di partenza">
+          <span class="lbl">Scenario</span>
+          <button class="preset on" data-preset="known"><b>29 ottobre</b><span>ufficiali + presunte</span></button>
+          <button class="preset" data-preset="official"><b>Solo ufficiali</b><span>il resto vota bianca</span></button>
+          <button class="preset" data-preset="snipers"><b>Franchi tiratori</b><span>15% vota l'altro</span></button>
+          <button class="preset" data-preset="blank"><b>Tutto da decidere</b><span>tutti in bianca</span></button>
+        </div>
+        <div class="rulesw" role="group" aria-label="Soglie per scrutinio">
+          <span class="lbl">Soglie</span>
+          <div class="seg seg-rules">
+            <button class="on" data-rules="vigente">In vigore: 50% + 1 a ogni scrutinio</button>
+            <button data-rules="storiche">Per gioco: 75% · 66,7% · 50% + 1</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="esito" id="esito" aria-live="polite"></div>
+      <div class="rounds" id="rounds"></div>
+
+      <div class="hemi-card">
+        <div class="hemi-cap" id="hemi-cap"></div>
+        <svg id="hemi" viewBox="0 0 600 320" role="img" aria-label="Emiciclo dei delegati"></svg>
+        <div class="wbar" id="wbar"></div>
+        <div class="wbar-axis"><span>0%</span><span class="mid" id="wbar-mid">50% + 1 voto</span><span>100%</span></div>
+      </div>
+
+      <div class="sim-grid">
+        <div class="comps" id="comps"></div>
+        <div class="coal" id="coal"></div>
+      </div>
+      <div class="sim-actions">
+        <button class="btn" id="reset">Torna al 29 ottobre</button>
+        <span class="sim-flag" id="simflag" hidden>Stai guardando una proiezione, non le posizioni note</span>
+      </div>
+    </section>
+
+    <section class="block" id="regole">
+      <div class="block-head">
+        <h2>Il regolamento, a menadito</h2>
+        <p>Regolamento elettorale e dei voti dell'Assemblea elettiva (artt. 1-10) e Statuto FIGC (testo del 20 novembre 2024), artt. 20-24.</p>
+      </div>
+      <div class="rules-grid">
+        <div class="table-wrap">
+          <table class="rtable" id="rtable">
+            <thead><tr><th>Componente</th><th>Peso</th><th>Delegati</th><th>Voti per delegato</th><th>Firme per accreditare</th></tr></thead>
+            <tbody></tbody>
+            <tfoot><tr><td>Totale</td><td>100%</td><td id="tot-del"></td><td>516 voti</td><td></td></tr></tfoot>
+          </table>
+        </div>
+        <ol class="rules">
+          <li><b>Chi può candidarsi.</b> Serve l'accredito, «senza vincolo di mandato», di almeno metà più uno dei delegati di almeno una Lega o una componente tecnica, su fogli conformi al modello, più un programma per il quadriennio olimpico (Reg. art. 6, c. 2). In Serie A sono 11 firme su 20, tra i calciatori 27 su 52, tra gli allenatori 14 su 26.</li>
+          <li><b>Quando.</b> Candidature in Segreteria generale almeno 40 giorni prima dell'Assemblea, pubblicate sul sito federale almeno 30 giorni prima (Reg. art. 6, c. 1): entro le 23:59 del 4 novembre.</li>
+          <li><b>L'ordine dei lavori.</b> Prima le assemblee di componente eleggono i consiglieri federali (al massimo tre ore), poi si apre l'elezione del presidente (Reg. art. 5). I candidati espongono il programma e intervengono al massimo due delegati per componente, cinque minuti ciascuno. Un candidato può ritirarsi in ogni momento (Reg. art. 7).</li>
+          <li><b>Come si vota.</b> Scrutinio segreto con voto elettronico, un solo candidato per delegato (Reg. artt. 8-9). Ogni voto vale il peso della propria componente: da 1,086 (Lega Pro) a 4,644 (Serie A).</li>
+          <li><b>Quanto serve.</b> La maggioranza assoluta dei voti validi, schede bianche comprese e nulle escluse, anche al ballottaggio (Reg. art. 9). Con tutti presenti: più di 258 voti su 516. Con due candidati si fanno fino a tre scrutini.</li>
+          <li><b>Quorum.</b> In prima convocazione 138 delegati che valgano almeno 259 voti; in seconda 96 delegati e 172 voti (Reg. art. 3).</li>
+          <li><b>Deleghe.</b> I delegati dei club sono i presidenti o loro delegati; quelli di calciatori e allenatori non possono dare né ricevere deleghe (Reg. art. 2; Statuto art. 20, c. 2).</li>
+        </ol>
+      </div>
+      <div class="callout">
+        <h3>Le componenti votano davvero in blocco?</h3>
+        <p>Sulla carta no. L'accredito è «senza vincolo di mandato» e il voto è segreto, quindi ogni delegato può votare diversamente dalla sua componente. In pratica le componenti danno un'indicazione e quasi tutti la seguono. A giugno Malagò, sostenuto da Serie A, calciatori e allenatori, ha preso il 68,58% al primo turno contro Abete, candidato dalla LND.</p>
+        <p>Per questo la simulazione parte dal voto in blocco, ma puoi passare al voto delegato per delegato e abbassare la compattezza di ogni componente.</p>
+        <p><b>Attenzione alle schede bianche.</b> Contano nel totale dei voti validi (Reg. art. 9). Una componente che non si schiera e vota bianca toglie quindi la maggioranza a tutti: nella simulazione gli incerti valgono proprio come schede bianche. Il regolamento non dice cosa succede se dopo il terzo scrutinio nessuno arriva al 50%: per i casi non previsti decide il presidente dell'Assemblea (Reg. art. 4, c. 3) e si applica lo Statuto (art. 10).</p>
+        <p class="muted">Nota: le versioni precedenti del regolamento chiedevano tre quarti dei voti al primo scrutinio e due terzi al secondo. Il testo in vigore (art. 9) chiede la maggioranza assoluta a ogni scrutinio: per questo a giugno Malagò è stato eletto al primo con il 68,58%.</p>
+      </div>
+    </section>
+
+    <section class="block" id="notizie">
+      <div class="block-head">
+        <h2>Il notiziario</h2>
+        <p>Le tappe principali, dalla più recente.</p>
+      </div>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p id="updated"></p>
+    <p>Fonti normative: <span id="sources"></span>. Contorni geografici: Natural Earth (pubblico dominio).</p>
+    <p class="muted">Stemmi e foto non sono inclusi: aggiungili nella cartella <code>img/</code> (istruzioni in <code>img/README.md</code>). Finché mancano, la pagina mostra monogrammi nei colori sociali.</p>
+  </footer>
+
+  <div class="tip" id="tip" role="tooltip" hidden></div>
+
+  <script src="assets/geo.js"></script>
+  <script src="data/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
